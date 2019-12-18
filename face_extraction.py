@@ -1,3 +1,18 @@
+#	Name        : face_extraction.py
+#	Author      : Faraone Christian Gennaro
+#	Version     : 1.0
+#	Copyright   : GNU GPL License (do whatever you want)
+#	Description : Simple face extractor from pictures
+
+
+#	ATTENTION
+#	this script was firstly ideated to retrieve the biggest face on a resume (usually the only and biggest face 
+#	on a resume shoule be of the candidate). We're using an intel premade xml cascade (it's a no deal training
+#	a new one just for recognizing faces in an easy environment)
+
+
+#
+#	we'll need only those two external libraries, this is a pretty light and vanilla project
 import cv2
 import base64
 
@@ -23,6 +38,7 @@ def face_finder(cv_path):
 	height = 200
 	dim = (width, height)
 	# resize image to a fixed size 200x200
+	# we used to resize the image because storing an heavy blob on a DB is pretty uncomfortable
 	resized = cv2.resize(crop_img, dim, interpolation = cv2.INTER_LINEAR)
  
 
@@ -30,6 +46,5 @@ def face_finder(cv_path):
 	retval, buffer = cv2.imencode('.jpg', crop_img)
 
 	img_base64 = base64.b64encode(buffer)
-
 
 	return img_base64
